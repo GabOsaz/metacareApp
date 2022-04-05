@@ -1,38 +1,36 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'Gelion-black';
+  src: local('Gelion'), url(./fonts/Gelion-Black.ttf) format('truetype');
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'Gelion-Regular';
+  src: local('Gelion'), url(./fonts/Gelion-Regular.ttf) format('truetype');
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: 'Gelion-Semibold';
+  src: local('Gelion'), url(./fonts/Gelion-SemiBold.ttf) format('truetype');
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+::-webkit-scrollbar {
+  width: .5em;
+  z-index: 60;
 }
 
-.App-link {
-  color: #61dafb;
+::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255);
+  color: #ffffff;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: rgb(209, 204, 204);
+  border-radius: .6em;
+  overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: rgb(145, 141, 141);
+  overflow-y: scroll;
 }
