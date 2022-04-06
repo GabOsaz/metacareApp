@@ -1,7 +1,7 @@
 import React from 'react'
 
-function HelpCenterSvg({ navIndex, activeNavIndex }) {
-    const color = `${navIndex === activeNavIndex ? '#6837EF' : '#696D8C'}`
+function HelpCenterSvg({ navIndex, activeNavIndex, theme }) {
+    const color = `${navIndex === activeNavIndex && theme !== 'dark' ? '#6837EF' : navIndex === activeNavIndex && theme === 'dark' ? '#CBB2F5' : theme === 'dark' ? '#B8B4C0' : '#696D8C'}`
 
     return (
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

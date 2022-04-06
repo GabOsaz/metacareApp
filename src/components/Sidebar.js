@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AdminSvg from '../svgs/AdminSvg';
 import AgentInboxSvg from '../svgs/AgentInboxSvg';
 import AnalyticsSvg from '../svgs/AnalyticsSvg';
@@ -6,12 +6,29 @@ import ChevronRight from '../svgs/ChevronRight';
 import HelpCenterSvg from '../svgs/HelpCenterSvg';
 import KnowledgeBaseSvg from '../svgs/KnowledgeBaseSvg';
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeSelect from './ThemeSelect';
+import { ThemeContext } from '../context/ThemeContext';
 
 function Sidebar() {
-    // const [ isSidebarOpen, setIsSidebarOpen ] = useState(true);
+    const themeContext = useContext(ThemeContext);
+    const theme = themeContext.theme;
     const [ activeNavIndex, setActiveNavIndex ] = useState();
-    const [ activeSubMenuItem, setActiveSubMenuItem ] = useState();
     const [ activeSubMenu, setActiveSubMenu ] = useState();
+    const [ userName ] = useState('adeyinka@metacare.app');
+
+    const sidebarAnime = {
+        hidden: { 
+            opacity: 0,
+            x: '-100px',
+        },
+        visible: { 
+            opacity: 1,
+            x: 0,
+            transition: {
+                duration: 1
+            }
+        },
+    }
 
     const handleMenuClick = (navItem) => {
         setActiveNavIndex(navItem)
@@ -52,12 +69,13 @@ function Sidebar() {
     ];
 
     const NavItem = ({ navItem, navIndex }) => {
+        const [ activeSubMenuItem, setActiveSubMenuItem ] = useState();
         
         const classes = `
           px-2 sm:px-6 justify-center sm:justify-start py-4 text-base rounded-full flex cursor-pointer font-normal
           ${activeNavIndex === navItem.label && activeSubMenu ?
-            'text-primary-color font-semibold' :
-            'text-gray-600 hover:text-primary-color transform hover:translate-x-1 transition ease-in-out duration-200'
+            'text-primary-color dark:text-darkmode-primary-color font-semibold' :
+            'text-gray-600 dark:text-grey-300 hover:text-primary-color dark:hover:text-darkmode-primary-color transform hover:translate-x-1 transition ease-in-out duration-200'
         }`;
 
         return (
@@ -66,21 +84,21 @@ function Sidebar() {
                     <div className="flex items-center justify-between w-full pr-4">
                         <div className='flex items-center'>
                             <div className='mr-4'>
-                            {/* <div className={`${isSidebarOpen ? 'mr-4' : 'mr-0'}`}> */}
-                                <navItem.icon navIndex={navItem.label} activeNavIndex={activeSubMenu} />
+                                <navItem.icon navIndex={navItem.label} activeNavIndex={activeSubMenu} theme={theme} />
                             </div>
                             <span className={``}>
-                            {/* <span className={`${isSidebarOpen ? 'block' : 'hidden'}`}> */}
                                 {navItem.label}
                             </span>
                         </div>
-                        <span className={`${activeNavIndex === navItem.label && activeSubMenu ? 'rotate-90' : 'rotate-0'} transition-all duration-200 ease-in-out`}> <ChevronRight navIndex={navIndex} activeNavIndex={activeNavIndex} /> </span>
+                        <span className={`${activeNavIndex === navItem.label && activeSubMenu ? 'origin-center rotate-90' : 'origin-center rotate-0'} transition-all duration-200 ease-in-out`}> 
+                            <ChevronRight theme={theme} /> 
+                        </span>
                     </div>
                 </motion.div>
                 <AnimatePresence initial={true}>
                     { activeNavIndex === navItem.label && activeSubMenu &&
                         <motion.ul
-                            key="content"
+                            key={navItem.label}
                             initial="collapsed"
                             animate="open"
                             exit="collapsed"
@@ -94,7 +112,7 @@ function Sidebar() {
                                 <motion.li 
                                     key={index}
                                     onClick={() => setActiveSubMenuItem(item)} 
-                                    className={`px-5 py-2 sm:px-[58px] cursor-pointer transition-colors duration-200 ease-in-out ${activeSubMenuItem === item && activeNavIndex === navItem.label && 'font-semibold text-black'}`}
+                                    className={`px-5 py-2 sm:px-[58px] dark:bg-darkmode-light-bg dark:hover:text-darkmode-text-color hover:text-black cursor-pointer transition-colors duration-200 ease-in-out ${activeSubMenuItem === item && activeNavIndex === navItem.label && 'font-semibold dark:text-darkmode-primary-color text-black'}`}
                                 >
                                     {item}
                                 </motion.li>
@@ -110,22 +128,32 @@ function Sidebar() {
         <div className=''>{children}</div>
     );
 
-  return (
-    <div className='w-[16.5vw] fixed top-0 left-0 h-screen border-r border-border-color text-text-color z-10'>
-        <div className='mt-[21px] w-[221px] mx-auto border py-3 text-center border-border-color rounded-lg'>
-            <div className='text-text-black font-gelion-black font-normal leading-[22px] text-sm'> Metacare </div>
-            <div className='text-xs font-gelion-regular'> adeyinka@metacare.app </div>
-        </div>
+    return (
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={sidebarAnime}
+            className='w-[16.5vw] dark:bg-dark-bg fixed top-0 left-0 h-screen border-r dark:border-darkmode-border-color border-border-color dark:text-grey-300 text-text-color z-10'
+        >
+            <div className='mt-[21px] w-[221px] mx-auto border py-3 text-center dark:border-darkmode-border-color border-border-color rounded-lg'>
+                <div className='text-text-black dark:text-darkmode-primary-color font-gelion-black font-normal leading-[22px] text-sm'> Metacare </div>
+                <div className='text-xs font-gelion-regular'> {userName} </div>
+            </div>
 
-        <div className="mt-[30px]">
-            {navItems.map((navItem, index) => (
-                <NavItemContainer key={index}>
-                    <NavItem navItem={navItem} navIndex={index} />
-                </NavItemContainer>
-            ))}
-        </div>
-    </div>
-  )
+            <div className="mt-[30px]">
+                {navItems.map((navItem, index) => (
+                    <NavItemContainer key={index}>
+                        <NavItem navItem={navItem} navIndex={index} />
+                    </NavItemContainer>
+                ))}
+            </div>
+
+            <div className='absolute bottom-10 left-6'>
+                <ThemeSelect />
+            </div>
+        </motion.div>
+    )
 }
 
 export default Sidebar

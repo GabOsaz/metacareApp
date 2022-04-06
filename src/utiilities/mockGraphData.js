@@ -1,6 +1,12 @@
 import { faker } from '@faker-js/faker';
+import { useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 
-const graphData = [
+const useGraphData = () => {
+  const themeContext = useContext(ThemeContext);
+  const theme = themeContext.theme;
+
+  return [
     {
         title: 'Average response Time',
         averagePercentageTitleEstimation: '+4.14%',
@@ -20,6 +26,7 @@ const graphData = [
                   backgroundColor: 'rgba(255, 255, 255)',
                   label: 'Average response Time',
                   pointRadius: 6,
+                  borderWidth: 2
                 },
                 
             ],
@@ -35,29 +42,36 @@ const graphData = [
             scales: {
               x: {
                 ticks: {
-                    padding: 5
+                  padding: 5,
+                  fontColor: '#6837EF'
                 },
                 grid: {
                   display: false,
                   drawBorder: false,
+                },
+                scaleLabel: {
+                  fontColor: '#6837EF'
                 }
               },
               y: {
                 ticks: {
                     padding: 20
                 },
-                weight: 16,
                 grid: {
                   drawBorder: false, // <-- this removes y-axis line
+                  color: `${theme === 'dark' ? '#233040' : '#ECEBF5'}`
+                },
+                scaleLabel: {
+                  fontColor: '#6837EF'
                 }
               }
             }
         }
     },
     {
-        title: 'Average response Time',
+        title: 'Replies per resolution ',
         averagePercentageTitleEstimation: '+6.14%',
-        averageTitle: 'Average Response Time',
+        averageTitle: 'Replies per resolution ',
         averageTitleEstimateMins: '20 mins',
         responseTime: '1 hour 3 mins', 
         data: {
@@ -71,8 +85,9 @@ const graphData = [
                   data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'].map(() => faker.datatype.number({ min: 0, max: 50 })),
                   borderColor: '#3E68FF',
                   backgroundColor: 'rgba(255, 255, 255)',
-                  label: 'Average response Time',
+                  label: 'Replies per resolution ',
                   pointRadius: 6,
+                  borderWidth: 2
                 },
                 
             ],
@@ -102,15 +117,16 @@ const graphData = [
                 weight: 16,
                 grid: {
                   drawBorder: false,
+                  color: `${theme === 'dark' ? '#233040' : '#ECEBF5'}`
                 }
               }
             }
         }
     },
     {
-        title: 'Average response Time',
+        title: 'Average resolution time',
         averagePercentageTitleEstimation: '+9.54%',
-        averageTitle: 'Average Response Time',
+        averageTitle: 'Average resolution time',
         averageTitleEstimateMins: '50 mins',
         responseTime: '1 hour 5 mins', 
         data: {
@@ -124,8 +140,9 @@ const graphData = [
                   data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'].map(() => faker.datatype.number({ min: 0, max: 50 })),
                   borderColor: '#FB6491',
                   backgroundColor: 'rgba(255, 255, 255)',
-                  label: 'Average response Time',
+                  label: 'Average resolution time',
                   pointRadius: 6,
+                  borderWidth: 2
                 },
                 
             ],
@@ -155,15 +172,16 @@ const graphData = [
                 weight: 1,
                 grid: {
                   drawBorder: false,
+                  color: `${theme === 'dark' ? '#233040' : '#ECEBF5'}`
                 }
               }
             }
         }
     },
     {
-        title: 'Average response Time',
+        title: 'First contact resolution rate',
         averagePercentageTitleEstimation: '+2.14%',
-        averageTitle: 'Average Response Time',
+        averageTitle: 'First contact resolution rate',
         averageTitleEstimateMins: '16 mins',
         responseTime: '2 hour 30 mins', 
         data: {
@@ -177,8 +195,9 @@ const graphData = [
                   data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'].map(() => faker.datatype.number({ min: 0, max: 50 })),
                   borderColor: '#07C9E2',
                   backgroundColor: 'rgba(255, 255, 255)',
-                  label: 'Average response Time',
+                  label: 'First contact resolution rate',
                   pointRadius: 6,
+                  borderWidth: 2
                 },
                 
             ],
@@ -205,14 +224,15 @@ const graphData = [
                 ticks: {
                     padding: 20
                 },
-                weight: 16,
                 grid: {
                   drawBorder: false,
+                  color: `${theme === 'dark' ? '#233040' : '#ECEBF5'}`
                 }
               }
             }
         }
     },
-]
+  ]
+}
 
-export default graphData;
+export default useGraphData;

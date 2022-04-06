@@ -1,7 +1,7 @@
 import React from 'react'
 
-function AdminSvg({ navIndex, activeNavIndex }) {
-  const color = `${navIndex === activeNavIndex ? '#6837EF' : '#696D8C'}`
+function AdminSvg({ navIndex, activeNavIndex, theme }) {
+  const color = `${navIndex === activeNavIndex && theme !== 'dark' ? '#6837EF' : navIndex === activeNavIndex && theme === 'dark' ? '#CBB2F5' : theme === 'dark' ? '#B8B4C0' : '#696D8C'}`
   
   return (
     <div>
